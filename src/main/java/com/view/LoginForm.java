@@ -4,6 +4,13 @@
  */
 package com.view;
 
+
+import com.controller.LoginController;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author prabhanjan
@@ -45,7 +52,7 @@ public class LoginForm extends javax.swing.JFrame {
         LoginImagePanel.setForeground(new java.awt.Color(62, 62, 62));
         LoginImagePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtUserName.setText("Username");
+        txtUserName.setText("Name");
         LoginImagePanel.add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 270, 48));
 
         txtPassword.setText("Password");
@@ -57,10 +64,15 @@ public class LoginForm extends javax.swing.JFrame {
         LoginImagePanel.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 100, 30));
 
         lblUsername1.setFont(new java.awt.Font("Yrsa SemiBold", 0, 18)); // NOI18N
-        lblUsername1.setText("Username");
+        lblUsername1.setText("Name");
         LoginImagePanel.add(lblUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 100, 30));
 
         btnSignIn.setText("Sign In");
+        btnSignIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSignInActionPerformed(evt);
+            }
+        });
         LoginImagePanel.add(btnSignIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 120, 40));
 
         btnSignUp1.setText("Sign Up");
@@ -128,6 +140,32 @@ public class LoginForm extends javax.swing.JFrame {
         this.dispose();
         new ForgotPassword().setVisible(true);
     }//GEN-LAST:event_lblForgotPasswordMouseClicked
+
+    private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
+        try {
+            if(txtUserName.getText().isEmpty() || txtUserName.getText().equals("Name"))
+                JOptionPane.showMessageDialog(LogInFormPanel, "Please Enter Name");
+            else if(txtPassword.getText().isEmpty() || txtPassword.getText().equals("Password"))
+                JOptionPane.showMessageDialog(LogInFormPanel, "Please Enter Password");
+            else {
+                ArrayList<String> data = new ArrayList<String>();
+                data.add(txtUserName.getText());
+                data.add(txtPassword.getText());
+                int chk = new LoginController().login(data);
+                if(chk == 1) {
+                    JOptionPane.showMessageDialog(LogInFormPanel, "Login Succesfull");
+                } else if(chk == 2) {
+                    JOptionPane.showMessageDialog(LogInFormPanel, "Password Not Match");
+                } else if(chk == 3) {
+                    JOptionPane.showMessageDialog(LogInFormPanel, "Name Not Match");
+                } else {
+                    JOptionPane.showMessageDialog(LogInFormPanel, "Login Failed !");
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(LogInFormPanel, ex.getMessage().toString());
+        }
+    }//GEN-LAST:event_btnSignInActionPerformed
 
     /**
      * @param args the command line arguments

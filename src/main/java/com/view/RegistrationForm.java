@@ -4,6 +4,13 @@
  */
 package com.view;
 
+import com.controller.LoginController;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author prabhanjan
@@ -184,8 +191,49 @@ public class RegistrationForm extends javax.swing.JFrame {
         this.DisposeWindow();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(RegistratinFormPanel, message);
+        return;
+    }
+    
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        this.DisposeWindow();
+        
+        if(txtName.getText().isEmpty() || txtName.getText().equals("Name")) {
+            showMessage("Please Enter Your Name");
+            return;
+        } else if(txtPassword.getText().isEmpty() || txtPassword.getText().equals("Password")) {
+            showMessage("Please Enter Password");
+            return;
+        } else if(txtRePassword.getText().isEmpty() || txtRePassword.getText().equals("Password")) {
+            showMessage("Please enter re-password");
+            return;
+        } else if(!txtPassword.getText().equals(txtRePassword.getText())) {
+            showMessage("Password not match");
+            return;
+        } else if(txtFavourite.getText().isEmpty() || txtFavourite.getText().equals("Favourite Expirement")) {
+            showMessage("Please enter Your Favourite Expirement");
+            return;
+        } else if(txtWorking.getText().isEmpty() || txtWorking.getText().equals("Company / University")) {
+            showMessage("Please Enter Your Company/University");
+            return;
+        } else {
+            try {
+                    ArrayList<String> user = new ArrayList<String>();
+                    user.add(txtName.getText());
+                    user.add(txtPassword.getText());
+                    user.add(txtFavourite.getText());
+                    user.add(txtWorking.getText());
+
+                    if(new LoginController().register(user) == 1) {
+                        showMessage("Registered Successfully");
+                    } else {
+                        showMessage("System Error !");
+                    }
+                    this.DisposeWindow();
+            } catch (SQLException ex) {
+                        showMessage(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     /**

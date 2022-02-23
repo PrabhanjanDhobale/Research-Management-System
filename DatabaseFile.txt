@@ -1,0 +1,13 @@
+
+Research Management System
+---------------------------------------------
+1] Create Database
+	- create database researchDB;
+
+2] use Database
+	- use researchDB;
+
+3] create Register Table
+	- create table register(username varchar(40), password varchar(40), expirement varchar(40));
+
+
