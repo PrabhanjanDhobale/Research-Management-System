@@ -5,6 +5,10 @@
 package com.view;
 
 import javax.swing.JOptionPane;
+import com.controller.ForgotPasswordController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,9 +19,18 @@ public class RecoverPassword extends javax.swing.JFrame {
     /**
      * Creates new form RecoverPassword
      */
+    String expirement;
+    
     public RecoverPassword() {
         initComponents();
     }
+    
+    public RecoverPassword(String expirement) {
+        this();
+        this.expirement = expirement;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,9 +136,26 @@ public class RecoverPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        JOptionPane.showMessageDialog(this, "Password Suuccessfully Recovered");
-        this.dispose();
-        new LoginForm().setVisible(true);
+        if(txtPassword.getText().isEmpty() || txtPassword.getText().equals("Password") || txtRePassword.getText().isEmpty() || txtRePassword.getText().equals("Password")) {
+            JOptionPane.showMessageDialog(this,"Please enter Password !");
+            return;
+        } else {
+            if(txtPassword.getText().equals(txtRePassword.getText())) {
+            ForgotPasswordController fvP = new ForgotPasswordController();
+            try {
+                if(fvP.changePassword(txtPassword.getText(), this.expirement) == 1){
+                    JOptionPane.showMessageDialog(this, "Password Updated Successfully! Please Login");
+                    this.dispose();
+                    new LoginForm().setVisible(true);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RecoverPassword.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Password not matched.");
+            return;
+        }
+        }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     /**

@@ -4,6 +4,12 @@
  */
 package com.view;
 
+import javax.swing.JOptionPane;
+import com.controller.ForgotPasswordController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author prabhanjan
@@ -33,7 +39,7 @@ public class ForgotPassword extends javax.swing.JFrame {
         btnSubmit = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Forgot Password");
 
         lblForgotPasswordTitle.setFont(new java.awt.Font("Yrsa SemiBold", 1, 36)); // NOI18N
@@ -120,8 +126,25 @@ public class ForgotPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        this.dispose();
-        new RecoverPassword().setVisible(true);
+        if(txtFavourite.getText().isEmpty() || txtFavourite.getText().equals("Favourite Expirement")){
+            JOptionPane.showMessageDialog(ForgotPasswordPanel, "Please enter Favourite Expirement");
+            return;
+        } else {
+            ForgotPasswordController favP = new ForgotPasswordController();
+            int i;
+            try {
+                i = favP.checkPassword(txtFavourite.getText().toString());
+                if(i == 1) {
+                    this.dispose();
+                    new RecoverPassword(txtFavourite.getText()).setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(ForgotPasswordPanel, "Favourite Expirement not matched. Please try again!");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(ForgotPasswordPanel, ex.getMessage());
+            }
+        }
+        
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     /**
