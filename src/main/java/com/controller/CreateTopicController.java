@@ -32,4 +32,44 @@ public class CreateTopicController {
         return 0;
     }
     
+    public ArrayList<String> getTopic() throws SQLException {
+        Connection conn = null;
+        ArrayList<String> names = new ArrayList<String>();
+        try{
+            conn = new ConnectionDB().Connect();
+            PreparedStatement stmt=conn.prepareStatement("select TopicName from topic");
+            ResultSet rs = stmt.executeQuery();
+           
+            while(rs.next()) {
+                names.add(rs.getString(1));
+            }
+            
+            System.out.println(names);
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
+            
+        }finally {
+          conn.close();  
+        }
+        
+        return names;
+    }
+    
+    public int deleteTopic(String topic) throws SQLException {
+        Connection conn = null;
+        try{
+            conn = new ConnectionDB().Connect();
+            PreparedStatement stmt=conn.prepareStatement("delete from topic where TopicName=?");
+            stmt.setString(1,topic);
+            if(stmt.executeUpdate() > 0) 
+                return 1;          
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
+            return 0;
+        }finally {
+          conn.close();  
+        }
+        
+        return 0;
+    }
 }

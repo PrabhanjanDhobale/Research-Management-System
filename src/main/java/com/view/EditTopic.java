@@ -4,6 +4,11 @@
  */
 package com.view;
 
+import com.controller.CreateTopicController;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author prabhanjan
@@ -13,8 +18,30 @@ public class EditTopic extends javax.swing.JFrame {
     /**
      * Creates new form EditTopic
      */
+    
+     ArrayList<String> topics;
+    
+    public void addinCmbTopic() {
+         try {
+            topics = new CreateTopicController().getTopic();
+            System.out.println(topics.size());
+            if(topics.size() <=0){
+                JOptionPane.showMessageDialog(PnlEditTopic, "No Data Found");
+                return;
+            } else {
+                cmbTopicName.addItem("Select");
+                for (String topic : topics) {
+                    cmbTopicName.addItem(topic);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(PnlEditTopic, ex.getMessage());
+        }
+    }
+    
     public EditTopic() {
         initComponents();
+        addinCmbTopic();
     }
 
     /**
@@ -80,8 +107,11 @@ public class EditTopic extends javax.swing.JFrame {
         });
 
         btnSearch.setText("Search");
-
-        cmbTopicName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Public", "Private" }));
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PnlEditTopicLayout = new javax.swing.GroupLayout(PnlEditTopic);
         PnlEditTopic.setLayout(PnlEditTopicLayout);
@@ -160,6 +190,10 @@ public class EditTopic extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
      * @param args the command line arguments

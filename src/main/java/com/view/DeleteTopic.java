@@ -4,6 +4,13 @@
  */
 package com.view;
 
+import javax.swing.JOptionPane;
+import com.controller.CreateTopicController;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author prabhanjan
@@ -13,8 +20,29 @@ public class DeleteTopic extends javax.swing.JFrame {
     /**
      * Creates new form DeleteTopic
      */
+    ArrayList<String> topics;
+    
+    public void addinCmbTopic() {
+         try {
+            topics = new CreateTopicController().getTopic();
+            System.out.println(topics.size());
+            if(topics.size() <=0){
+                JOptionPane.showMessageDialog(PnlDeleteTopic, "No Data Found");
+                return;
+            } else {
+                cmbTopicName.addItem("Select");
+                for (String topic : topics) {
+                    cmbTopicName.addItem(topic);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DeleteTopic.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public DeleteTopic() {
         initComponents();
+        addinCmbTopic();
     }
 
     /**
@@ -26,7 +54,7 @@ public class DeleteTopic extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        PnlDeleteTopic = new javax.swing.JPanel();
         lblTopicName = new javax.swing.JLabel();
         cmbTopicName = new javax.swing.JComboBox<>();
         btnDelete = new javax.swing.JButton();
@@ -35,16 +63,19 @@ public class DeleteTopic extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Delete Topic");
 
-        jPanel1.setBackground(new java.awt.Color(52, 73, 94));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Delete Topic", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        PnlDeleteTopic.setBackground(new java.awt.Color(52, 73, 94));
+        PnlDeleteTopic.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Delete Topic", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         lblTopicName.setFont(new java.awt.Font("Liberation Sans", 3, 24)); // NOI18N
         lblTopicName.setForeground(new java.awt.Color(255, 255, 204));
         lblTopicName.setText("Topic Name");
 
-        cmbTopicName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Public", "Private" }));
-
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -53,32 +84,32 @@ public class DeleteTopic extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout PnlDeleteTopicLayout = new javax.swing.GroupLayout(PnlDeleteTopic);
+        PnlDeleteTopic.setLayout(PnlDeleteTopicLayout);
+        PnlDeleteTopicLayout.setHorizontalGroup(
+            PnlDeleteTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PnlDeleteTopicLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(lblTopicName)
                 .addGap(47, 47, 47)
                 .addComponent(cmbTopicName, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(PnlDeleteTopicLayout.createSequentialGroup()
                 .addGap(71, 71, 71)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        PnlDeleteTopicLayout.setVerticalGroup(
+            PnlDeleteTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PnlDeleteTopicLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlDeleteTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTopicName)
                     .addComponent(cmbTopicName, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlDeleteTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(96, Short.MAX_VALUE))
@@ -88,11 +119,11 @@ public class DeleteTopic extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PnlDeleteTopic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PnlDeleteTopic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -102,6 +133,23 @@ public class DeleteTopic extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if(cmbTopicName.getSelectedItem().toString().equals("Select")) {
+            JOptionPane.showMessageDialog(PnlDeleteTopic, "Please Select Topic");
+        } else {
+            try {
+                int chk = new CreateTopicController().deleteTopic(cmbTopicName.getSelectedItem().toString());
+                if(chk == 1) {
+                    JOptionPane.showMessageDialog(PnlDeleteTopic, "Topic Deleted Successfully");
+                    cmbTopicName.removeAllItems();
+                    addinCmbTopic();
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(PnlDeleteTopic, ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,10 +187,10 @@ public class DeleteTopic extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PnlDeleteTopic;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
     private javax.swing.JComboBox<String> cmbTopicName;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblTopicName;
     // End of variables declaration//GEN-END:variables
 }
