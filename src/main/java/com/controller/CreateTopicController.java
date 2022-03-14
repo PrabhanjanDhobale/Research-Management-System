@@ -55,6 +55,67 @@ public class CreateTopicController {
         return names;
     }
     
+    public ArrayList getTopicData(String topic) throws SQLException {
+        Connection conn = null;
+        ArrayList topicData = new ArrayList();
+        try{
+            conn = new ConnectionDB().Connect();
+            PreparedStatement stmt=conn.prepareStatement("select * from topic where TopicName=?");
+            stmt.setString(1,topic);
+            ResultSet rs = stmt.executeQuery();
+           
+            while(rs.next()) {
+                topicData.add(rs.getInt(1));
+                topicData.add(rs.getString(2));
+                topicData.add(rs.getString(3));
+                topicData.add(rs.getString(4));
+                topicData.add(rs.getString(5));
+            }
+            
+            System.out.println(topicData);
+            
+            
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
+            
+        }finally {
+          conn.close();  
+        }
+        
+        return topicData;
+    }
+    
+    public int updateTopicInfo(ArrayList data) throws SQLException {
+        Connection conn = null;
+     try{
+            System.out.println(data);
+            System.out.println(data.size());
+            conn = new ConnectionDB().Connect();
+            String sqlUpdate = "UPDATE topic "
+                + "SET TopicName=?, TopicDesc=?, GuideName=?, Accessibility=? "
+                + "WHERE TopicName=?";
+            
+            PreparedStatement pstmt = conn.prepareStatement(sqlUpdate);
+              
+            pstmt.setString(1, data.get(0).toString());
+            pstmt.setString(2, data.get(1).toString());
+            pstmt.setString(3, data.get(2).toString());
+            pstmt.setString(4, data.get(3).toString());
+            pstmt.setString(5, data.get(0).toString());
+            
+            
+            if(pstmt.executeUpdate() > 0){
+                return 1;
+            }
+            return 0;
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage().toString());
+            return 0;
+        }finally {
+          conn.close();  
+        }   
+    }
+    
     public int deleteTopic(String topic) throws SQLException {
         Connection conn = null;
         try{

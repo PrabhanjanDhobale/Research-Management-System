@@ -7,7 +7,10 @@ package com.view;
 import com.controller.CreateTopicController;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -66,6 +69,8 @@ public class EditTopic extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
         cmbTopicName = new javax.swing.JComboBox<>();
+        lblTopicNametxt = new javax.swing.JLabel();
+        txtTopicName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Topic");
@@ -97,7 +102,12 @@ public class EditTopic extends javax.swing.JFrame {
 
         cmbAccessibility.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Public", "Private" }));
 
-        btnCreate.setText("Create");
+        btnCreate.setText("Update");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -113,32 +123,38 @@ public class EditTopic extends javax.swing.JFrame {
             }
         });
 
+        lblTopicNametxt.setFont(new java.awt.Font("Liberation Sans", 3, 24)); // NOI18N
+        lblTopicNametxt.setForeground(new java.awt.Color(255, 255, 204));
+        lblTopicNametxt.setText("Topic Name");
+
         javax.swing.GroupLayout PnlEditTopicLayout = new javax.swing.GroupLayout(PnlEditTopic);
         PnlEditTopic.setLayout(PnlEditTopicLayout);
         PnlEditTopicLayout.setHorizontalGroup(
             PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlEditTopicLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTopicName)
-                    .addComponent(lblTopicDescription)
-                    .addComponent(lblGuide)
-                    .addComponent(lblAssessibility))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtGuideName)
-                        .addComponent(cmbAccessibility, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1))
-                    .addComponent(cmbTopicName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(90, 90, 90))
             .addGroup(PnlEditTopicLayout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(105, 105, 105))
+            .addGroup(PnlEditTopicLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTopicName)
+                    .addComponent(lblTopicDescription)
+                    .addComponent(lblGuide)
+                    .addComponent(lblAssessibility)
+                    .addComponent(lblTopicNametxt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtTopicName)
+                    .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtGuideName)
+                        .addComponent(cmbAccessibility, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1))
+                    .addComponent(cmbTopicName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(90, 90, 90))
         );
         PnlEditTopicLayout.setVerticalGroup(
             PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,14 +166,20 @@ public class EditTopic extends javax.swing.JFrame {
                 .addGroup(PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PnlEditTopicLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblTopicDescription)
-                        .addGap(65, 65, 65))
+                        .addComponent(lblTopicNametxt))
                     .addGroup(PnlEditTopicLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addComponent(txtTopicName, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40)
+                .addGroup(PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlEditTopicLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)))
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlEditTopicLayout.createSequentialGroup()
+                        .addComponent(lblTopicDescription)
+                        .addGap(65, 65, 65)))
                 .addGroup(PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGuide)
                     .addComponent(txtGuideName, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -192,8 +214,60 @@ public class EditTopic extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        
+         try {
+             ArrayList data = new CreateTopicController().getTopicData(cmbTopicName.getSelectedItem().toString());
+             System.out.println(data.size());
+             txtTopicName.setText(data.get(1).toString());
+             txtTopicDescription.setText(data.get(2).toString());
+             txtGuideName.setText(data.get(3).toString());
+             cmbAccessibility.setSelectedItem(data.get(4));
+         } catch (Exception ex) {
+             JOptionPane.showMessageDialog(this, ex.getMessage());
+         }
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    void showMessage(JPanel root, String msg) {
+        JOptionPane.showMessageDialog(root, msg);
+       
+    }
+    
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        
+        if(txtTopicName.getText().isEmpty()) {
+            showMessage(PnlEditTopic, "Please Enter Topic Name");
+        } else if(txtTopicDescription.getText().isBlank()) {
+            showMessage(PnlEditTopic, "Please Enter Topic Discription");
+        } else if(txtGuideName.getText().isEmpty()) {
+            showMessage(PnlEditTopic, "Please Enter Guide Name");
+        } else if(cmbAccessibility.getSelectedItem().toString().equals("Select")) {
+            showMessage(PnlEditTopic, "Please Select Accessibility");
+        } else {
+            try {
+                    ArrayList data = new ArrayList();
+        
+                    data.add(txtTopicName.getText());
+                    data.add(txtTopicDescription.getText());
+                    data.add(txtGuideName.getText());
+                    data.add(cmbAccessibility.getSelectedItem());
+                    
+                    int chk = new CreateTopicController().updateTopicInfo(data);
+                    
+                    if(chk == 1) {
+                        showMessage(PnlEditTopic, "Topic Updated Successfully !");
+                        txtTopicName.setText("");
+                        txtTopicDescription.setText("");
+                        txtGuideName.setText("");
+                        cmbAccessibility.setSelectedIndex(0);
+                    } else {
+                        showMessage(PnlEditTopic, "Error : Topic Not Updated !");
+                    }
+                  
+            } catch(Exception ex) {
+                showMessage(PnlEditTopic, ex.getMessage());
+            }
+        }
+        
+    }//GEN-LAST:event_btnCreateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,7 +316,9 @@ public class EditTopic extends javax.swing.JFrame {
     private javax.swing.JLabel lblGuide;
     private javax.swing.JLabel lblTopicDescription;
     private javax.swing.JLabel lblTopicName;
+    private javax.swing.JLabel lblTopicNametxt;
     private javax.swing.JTextField txtGuideName;
     private javax.swing.JTextArea txtTopicDescription;
+    private javax.swing.JTextField txtTopicName;
     // End of variables declaration//GEN-END:variables
 }

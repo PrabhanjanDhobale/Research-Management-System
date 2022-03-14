@@ -39,6 +39,31 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Data"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="MnIAddData">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add Data"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnIAddDataActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MnlUpdateData">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Update Data"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MnlDeleteData">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Delete Data"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MnlShowData">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Show Data"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="MnSetting">
           <Properties>

@@ -33,6 +33,10 @@ public class MainPage extends javax.swing.JFrame {
         MnIEditTopic = new javax.swing.JMenuItem();
         MnIDeleteTopic = new javax.swing.JMenuItem();
         MnAddData = new javax.swing.JMenu();
+        MnIAddData = new javax.swing.JMenuItem();
+        MnlUpdateData = new javax.swing.JMenuItem();
+        MnlDeleteData = new javax.swing.JMenuItem();
+        MnlShowData = new javax.swing.JMenuItem();
         MnSetting = new javax.swing.JMenu();
         MnHelp = new javax.swing.JMenu();
 
@@ -81,6 +85,24 @@ public class MainPage extends javax.swing.JFrame {
         MenuMain.add(MnCreateTopic);
 
         MnAddData.setText("Data");
+
+        MnIAddData.setText("Add Data");
+        MnIAddData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnIAddDataActionPerformed(evt);
+            }
+        });
+        MnAddData.add(MnIAddData);
+
+        MnlUpdateData.setText("Update Data");
+        MnAddData.add(MnlUpdateData);
+
+        MnlDeleteData.setText("Delete Data");
+        MnAddData.add(MnlDeleteData);
+
+        MnlShowData.setText("Show Data");
+        MnAddData.add(MnlShowData);
+
         MenuMain.add(MnAddData);
 
         MnSetting.setText("Setting");
@@ -118,6 +140,10 @@ public class MainPage extends javax.swing.JFrame {
     private void MnIDeleteTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnIDeleteTopicActionPerformed
         new DeleteTopic().setVisible(true);
     }//GEN-LAST:event_MnIDeleteTopicActionPerformed
+
+    private void MnIAddDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnIAddDataActionPerformed
+        new AddData().setVisible(true);
+    }//GEN-LAST:event_MnIAddDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,10 +185,14 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenu MnAddData;
     private javax.swing.JMenu MnCreateTopic;
     private javax.swing.JMenu MnHelp;
+    private javax.swing.JMenuItem MnIAddData;
     private javax.swing.JMenuItem MnICreateTopic;
     private javax.swing.JMenuItem MnIDeleteTopic;
     private javax.swing.JMenuItem MnIEditTopic;
     private javax.swing.JMenu MnSetting;
+    private javax.swing.JMenuItem MnlDeleteData;
+    private javax.swing.JMenuItem MnlShowData;
+    private javax.swing.JMenuItem MnlUpdateData;
     private javax.swing.JPanel PnlHome;
     // End of variables declaration//GEN-END:variables
 }
