@@ -47,8 +47,10 @@ public class LoginForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        LogInFormPanel.setBackground(new java.awt.Color(52, 73, 94));
         LogInFormPanel.setForeground(new java.awt.Color(62, 62, 62));
 
+        LoginImagePanel.setBackground(new java.awt.Color(52, 73, 94));
         LoginImagePanel.setForeground(new java.awt.Color(62, 62, 62));
         LoginImagePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -60,10 +62,12 @@ public class LoginForm extends javax.swing.JFrame {
         LoginImagePanel.add(LogInSepretor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 390, -1));
 
         lblPassword.setFont(new java.awt.Font("Yrsa SemiBold", 0, 18)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Password");
         LoginImagePanel.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 100, 30));
 
         lblUsername1.setFont(new java.awt.Font("Yrsa SemiBold", 0, 18)); // NOI18N
+        lblUsername1.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername1.setText("Name");
         LoginImagePanel.add(lblUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 100, 30));
 
@@ -84,6 +88,7 @@ public class LoginForm extends javax.swing.JFrame {
         LoginImagePanel.add(btnSignUp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 120, 40));
 
         lblForgotPassword.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        lblForgotPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblForgotPassword.setText("Forgot Password");
         lblForgotPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         lblForgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -94,6 +99,7 @@ public class LoginForm extends javax.swing.JFrame {
         LoginImagePanel.add(lblForgotPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, 190, 40));
 
         lblLoginTitle.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
+        lblLoginTitle.setForeground(new java.awt.Color(255, 255, 255));
         lblLoginTitle.setText("Log In");
         LoginImagePanel.add(lblLoginTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
@@ -108,9 +114,8 @@ public class LoginForm extends javax.swing.JFrame {
         );
         LogInFormPanelLayout.setVerticalGroup(
             LogInFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LogInFormPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(LoginImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LogInFormPanelLayout.createSequentialGroup()
+                .addComponent(LoginImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -154,6 +159,8 @@ public class LoginForm extends javax.swing.JFrame {
                 int chk = new LoginController().login(data);
                 if(chk == 1) {
                     JOptionPane.showMessageDialog(LogInFormPanel, "Login Succesfull");
+                    this.dispose();
+                    new MainPage().setVisible(true);
                 } else if(chk == 2) {
                     JOptionPane.showMessageDialog(LogInFormPanel, "Password Not Match");
                 } else if(chk == 3) {

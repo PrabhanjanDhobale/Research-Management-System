@@ -51,21 +51,27 @@ public class RegistrationForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registration Form");
 
+        RegistratinFormPanel.setBackground(new java.awt.Color(52, 73, 94));
         RegistratinFormPanel.setForeground(new java.awt.Color(62, 62, 62));
 
         RegistartionFormTitle.setFont(new java.awt.Font("Yrsa SemiBold", 1, 36)); // NOI18N
+        RegistartionFormTitle.setForeground(new java.awt.Color(255, 255, 255));
         RegistartionFormTitle.setText("Registration Form");
 
         lblName.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblName.setForeground(new java.awt.Color(255, 255, 255));
         lblName.setText("Name");
 
         lblWorking.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblWorking.setForeground(new java.awt.Color(255, 255, 255));
         lblWorking.setText("Company / University");
 
         lblPassword.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Password");
 
         lblRePassword.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblRePassword.setForeground(new java.awt.Color(255, 255, 255));
         lblRePassword.setText("Re-enter Password");
 
         txtName.setText("Name");
@@ -91,6 +97,7 @@ public class RegistrationForm extends javax.swing.JFrame {
         });
 
         lblFavourite.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblFavourite.setForeground(new java.awt.Color(255, 255, 255));
         lblFavourite.setText("Favourite Expirement");
 
         txtFavourite.setText("Favourite Expirement");

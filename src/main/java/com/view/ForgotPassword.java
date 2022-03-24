@@ -42,10 +42,15 @@ public class ForgotPassword extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Forgot Password");
 
+        ForgotPasswordPanel.setBackground(new java.awt.Color(52, 73, 94));
+        ForgotPasswordPanel.setForeground(new java.awt.Color(255, 255, 255));
+
         lblForgotPasswordTitle.setFont(new java.awt.Font("Yrsa SemiBold", 1, 36)); // NOI18N
+        lblForgotPasswordTitle.setForeground(new java.awt.Color(255, 255, 255));
         lblForgotPasswordTitle.setText("Forgot Password");
 
         lblFavourite.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblFavourite.setForeground(new java.awt.Color(255, 255, 255));
         lblFavourite.setText("Favourite Expirement");
 
         txtFavourite.setText("Favourite Expirement");

@@ -95,6 +95,11 @@ public class MainPage extends javax.swing.JFrame {
         MnAddData.add(MnIAddData);
 
         MnlUpdateData.setText("Update Data");
+        MnlUpdateData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnlUpdateDataActionPerformed(evt);
+            }
+        });
         MnAddData.add(MnlUpdateData);
 
         MnlDeleteData.setText("Delete Data");
@@ -144,6 +149,10 @@ public class MainPage extends javax.swing.JFrame {
     private void MnIAddDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnIAddDataActionPerformed
         new AddData().setVisible(true);
     }//GEN-LAST:event_MnIAddDataActionPerformed
+
+    private void MnlUpdateDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnlUpdateDataActionPerformed
+        new EditData().setVisible(true);
+    }//GEN-LAST:event_MnlUpdateDataActionPerformed
 
     /**
      * @param args the command line arguments
