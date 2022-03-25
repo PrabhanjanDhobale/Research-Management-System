@@ -4,6 +4,10 @@
  */
 package com.view;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author prabhanjan
@@ -32,13 +36,16 @@ public class MainPage extends javax.swing.JFrame {
         MnICreateTopic = new javax.swing.JMenuItem();
         MnIEditTopic = new javax.swing.JMenuItem();
         MnIDeleteTopic = new javax.swing.JMenuItem();
+        MnlShowTopic = new javax.swing.JMenuItem();
         MnAddData = new javax.swing.JMenu();
         MnIAddData = new javax.swing.JMenuItem();
         MnlUpdateData = new javax.swing.JMenuItem();
         MnlDeleteData = new javax.swing.JMenuItem();
         MnlShowData = new javax.swing.JMenuItem();
         MnSetting = new javax.swing.JMenu();
-        MnHelp = new javax.swing.JMenu();
+        MnIEditAccount = new javax.swing.JMenuItem();
+        MnIContact = new javax.swing.JMenuItem();
+        MnlHelp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Research Management System");
@@ -82,6 +89,9 @@ public class MainPage extends javax.swing.JFrame {
         });
         MnCreateTopic.add(MnIDeleteTopic);
 
+        MnlShowTopic.setText("Show Topics");
+        MnCreateTopic.add(MnlShowTopic);
+
         MenuMain.add(MnCreateTopic);
 
         MnAddData.setText("Data");
@@ -111,10 +121,27 @@ public class MainPage extends javax.swing.JFrame {
         MenuMain.add(MnAddData);
 
         MnSetting.setText("Setting");
-        MenuMain.add(MnSetting);
 
-        MnHelp.setText("Help");
-        MenuMain.add(MnHelp);
+        MnIEditAccount.setText("Edit Account");
+        MnIEditAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnIEditAccountActionPerformed(evt);
+            }
+        });
+        MnSetting.add(MnIEditAccount);
+
+        MnIContact.setText("Contact Us");
+        MnIContact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnIContactActionPerformed(evt);
+            }
+        });
+        MnSetting.add(MnIContact);
+
+        MnlHelp.setText("Help");
+        MnSetting.add(MnlHelp);
+
+        MenuMain.add(MnSetting);
 
         setJMenuBar(MenuMain);
 
@@ -153,6 +180,18 @@ public class MainPage extends javax.swing.JFrame {
     private void MnlUpdateDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnlUpdateDataActionPerformed
         new EditData().setVisible(true);
     }//GEN-LAST:event_MnlUpdateDataActionPerformed
+
+    private void MnIEditAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnIEditAccountActionPerformed
+        try {
+            new Account().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MnIEditAccountActionPerformed
+
+    private void MnIContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnIContactActionPerformed
+         new ContactUs().setVisible(true);
+    }//GEN-LAST:event_MnIContactActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,14 +232,17 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuMain;
     private javax.swing.JMenu MnAddData;
     private javax.swing.JMenu MnCreateTopic;
-    private javax.swing.JMenu MnHelp;
     private javax.swing.JMenuItem MnIAddData;
+    private javax.swing.JMenuItem MnIContact;
     private javax.swing.JMenuItem MnICreateTopic;
     private javax.swing.JMenuItem MnIDeleteTopic;
+    private javax.swing.JMenuItem MnIEditAccount;
     private javax.swing.JMenuItem MnIEditTopic;
     private javax.swing.JMenu MnSetting;
     private javax.swing.JMenuItem MnlDeleteData;
+    private javax.swing.JMenuItem MnlHelp;
     private javax.swing.JMenuItem MnlShowData;
+    private javax.swing.JMenuItem MnlShowTopic;
     private javax.swing.JMenuItem MnlUpdateData;
     private javax.swing.JPanel PnlHome;
     // End of variables declaration//GEN-END:variables

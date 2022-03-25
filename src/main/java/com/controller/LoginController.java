@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.model.ConnectionDB;
+import com.view.AccountInfo;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -45,6 +46,66 @@ public class LoginController {
                 return 1;
         } catch(Exception ex) {
              System.out.println(ex.getMessage().toString());
+            return 0;
+        }finally {
+          conn.close();  
+        }
+    }
+    
+    public ArrayList getLoginDetails() throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt;
+        ArrayList data = new ArrayList();
+        try{
+            conn = new ConnectionDB().Connect();
+            
+            stmt=conn.prepareStatement("select * from register where username=?");
+            
+            
+            stmt.setString(1,AccountInfo.uname);
+            
+            System.out.println(stmt.toString());
+            
+            ResultSet rs = stmt.executeQuery();
+           
+            while(rs.next()) {
+                data.add(rs.getString(1));
+                data.add(rs.getString(2));
+                data.add(rs.getString(3));
+                data.add(rs.getString(4));
+            }
+            
+            
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
+            
+        }finally {
+          conn.close();  
+        }
+        
+        return data;
+    }
+    
+    public int UpdateLoginData(String uname, String password, String expirement, String company) throws SQLException {
+        Connection conn = null;
+        try{   
+            conn = new ConnectionDB().Connect();
+            String sqlUpdate = "UPDATE register SET username=?, password=?, expirement=?, company=? WHERE username=?";
+            
+            PreparedStatement pstmt = conn.prepareStatement(sqlUpdate);
+              
+            pstmt.setString(1, uname);
+            pstmt.setString(2, password);
+            pstmt.setString(3, expirement);
+            pstmt.setString(4, company);
+            pstmt.setString(5, AccountInfo.uname);
+           
+            if(pstmt.executeUpdate() > 0){
+                return 1;
+            }
+            return 0;
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage().toString());
             return 0;
         }finally {
           conn.close();  

@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  * @author prabhanjan
  */
 public class LoginForm extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form LoginForm
@@ -157,6 +158,7 @@ public class LoginForm extends javax.swing.JFrame {
                 data.add(txtUserName.getText());
                 data.add(txtPassword.getText());
                 int chk = new LoginController().login(data);
+                AccountInfo.uname = txtUserName.getText();
                 if(chk == 1) {
                     JOptionPane.showMessageDialog(LogInFormPanel, "Login Succesfull");
                     this.dispose();

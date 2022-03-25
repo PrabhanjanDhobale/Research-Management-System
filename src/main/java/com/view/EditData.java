@@ -4,7 +4,18 @@
  */
 package com.view;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import com.controller.DataOperationsController;
+import com.controller.CreateTopicController;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /**
@@ -16,8 +27,45 @@ public class EditData extends javax.swing.JFrame {
     /**
      * Creates new form EditData
      */
+    
+    ArrayList<String> topics;
+    ArrayList data;
     public EditData() {
         initComponents();
+        addinCmbTopic();
+        
+    }
+    
+    public void addinCmbTopic() {
+         try {
+            topics = new CreateTopicController().getTopic();
+            System.out.println(topics.size());
+            if(topics.size() <=0){
+                JOptionPane.showMessageDialog(this, "No Data Found");
+                return;
+            } else {
+                cmbTopicName.addItem("Select");
+                cmbTopicNameLink.addItem("Select");
+                for (String topic : topics) {
+                    cmbTopicName.addItem(topic);
+                    cmbTopicNameLink.addItem(topic);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+    
+    public void clearLinks() {
+        cmbTopicNameLink.setSelectedIndex(0);
+        txtLinks.setText("");
+        cmbLinkTitle.setSelectedIndex(0);
+    }
+    
+    public void clearScreen() {
+        cmbTopicName.setSelectedIndex(0);
+        txtAddText.setText("");
+        cmbTextTitle.setSelectedIndex(0);
     }
 
     /**
@@ -30,31 +78,29 @@ public class EditData extends javax.swing.JFrame {
     private void initComponents() {
 
         PnlAddData = new javax.swing.JPanel();
-        TbpEditData = new javax.swing.JTabbedPane();
-        PnlEditText = new javax.swing.JPanel();
+        TbpAddData = new javax.swing.JTabbedPane();
+        PnlAddText = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAddText = new javax.swing.JTextArea();
-        btnSave = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
-        lblSearchTopic = new javax.swing.JLabel();
-        cmbSelectTopic = new javax.swing.JComboBox<>();
-        btnGetText = new javax.swing.JButton();
-        PnlEditLinks = new javax.swing.JPanel();
+        lblTextTitle = new javax.swing.JLabel();
+        lblTopicNameText = new javax.swing.JLabel();
+        cmbTopicName = new javax.swing.JComboBox<>();
+        cmbTextTitle = new javax.swing.JComboBox<>();
+        btnSearchText = new javax.swing.JButton();
+        btnSearchTextData = new javax.swing.JButton();
+        PnlAddLinks = new javax.swing.JPanel();
         lblLinkTitle = new javax.swing.JLabel();
-        txtLinkTitle = new javax.swing.JTextField();
         lblLinks = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtLinks = new javax.swing.JTextArea();
-        btnSaveLinks = new javax.swing.JButton();
+        btnUpdateLinks = new javax.swing.JButton();
         btnClearLinks = new javax.swing.JButton();
-        PnlEditMedia = new javax.swing.JPanel();
-        lblAddMedia = new javax.swing.JLabel();
-        txtFilePath = new javax.swing.JTextField();
-        btnChooseFile = new javax.swing.JButton();
-        btnMediaName = new javax.swing.JLabel();
-        txtMediaName = new javax.swing.JTextField();
-        btnSaveMedia = new javax.swing.JButton();
-        btnClearMedia = new javax.swing.JButton();
+        lblTopicNameLink = new javax.swing.JLabel();
+        cmbTopicNameLink = new javax.swing.JComboBox<>();
+        cmbLinkTitle = new javax.swing.JComboBox<>();
+        btnSearchLinks = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Data");
@@ -62,9 +108,9 @@ public class EditData extends javax.swing.JFrame {
         PnlAddData.setBackground(new java.awt.Color(52, 73, 94));
         PnlAddData.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Data", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        TbpEditData.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        TbpAddData.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
 
-        PnlEditText.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Edit Text", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24))); // NOI18N
+        PnlAddText.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Edit Text", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24))); // NOI18N
 
         txtAddText.setColumns(20);
         txtAddText.setFont(new java.awt.Font("Liberation Sans", 2, 18)); // NOI18N
@@ -72,10 +118,10 @@ public class EditData extends javax.swing.JFrame {
         txtAddText.setRows(5);
         jScrollPane1.setViewportView(txtAddText);
 
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
 
@@ -86,60 +132,79 @@ public class EditData extends javax.swing.JFrame {
             }
         });
 
-        lblSearchTopic.setFont(new java.awt.Font("Liberation Sans", 3, 24)); // NOI18N
-        lblSearchTopic.setText("Select Topic");
+        lblTextTitle.setFont(new java.awt.Font("Liberation Sans", 3, 24)); // NOI18N
+        lblTextTitle.setText("Title");
 
-        cmbSelectTopic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lblTopicNameText.setFont(new java.awt.Font("Liberation Sans", 3, 24)); // NOI18N
+        lblTopicNameText.setText("Topic");
 
-        btnGetText.setText("Select");
+        btnSearchText.setText("Search");
+        btnSearchText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchTextActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout PnlEditTextLayout = new javax.swing.GroupLayout(PnlEditText);
-        PnlEditText.setLayout(PnlEditTextLayout);
-        PnlEditTextLayout.setHorizontalGroup(
-            PnlEditTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlEditTextLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        btnSearchTextData.setText("Search");
+        btnSearchTextData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchTextDataActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PnlAddTextLayout = new javax.swing.GroupLayout(PnlAddText);
+        PnlAddText.setLayout(PnlAddTextLayout);
+        PnlAddTextLayout.setHorizontalGroup(
+            PnlAddTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PnlAddTextLayout.createSequentialGroup()
+                .addGap(118, 118, 118)
+                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
                 .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(184, 184, 184))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlEditTextLayout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 871, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-            .addGroup(PnlEditTextLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(lblSearchTopic)
-                .addGap(74, 74, 74)
-                .addComponent(cmbSelectTopic, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(185, 185, 185))
+            .addGroup(PnlAddTextLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(btnGetText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(PnlAddTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(PnlAddTextLayout.createSequentialGroup()
+                        .addGroup(PnlAddTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTextTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTopicNameText))
+                        .addGap(18, 18, 18)
+                        .addGroup(PnlAddTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbTopicName, 0, 585, Short.MAX_VALUE)
+                            .addComponent(cmbTextTitle, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PnlAddTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSearchText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearchTextData, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(27, 27, 27))
         );
-        PnlEditTextLayout.setVerticalGroup(
-            PnlEditTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlEditTextLayout.createSequentialGroup()
-                .addGroup(PnlEditTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PnlEditTextLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(PnlEditTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblSearchTopic)
-                            .addComponent(cmbSelectTopic, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlEditTextLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(btnGetText, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addGroup(PnlEditTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+        PnlAddTextLayout.setVerticalGroup(
+            PnlAddTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PnlAddTextLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(PnlAddTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTopicNameText)
+                    .addComponent(cmbTopicName, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(PnlAddTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTextTitle)
+                    .addComponent(cmbTextTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchTextData, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(PnlAddTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        TbpEditData.addTab("Edit Text", PnlEditText);
+        TbpAddData.addTab("Add Text", PnlAddText);
 
-        PnlEditLinks.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Edit Links", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24))); // NOI18N
+        PnlAddLinks.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Edit Links", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24))); // NOI18N
 
         lblLinkTitle.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         lblLinkTitle.setText("Link Title");
@@ -152,108 +217,80 @@ public class EditData extends javax.swing.JFrame {
         txtLinks.setRows(5);
         jScrollPane2.setViewportView(txtLinks);
 
-        btnSaveLinks.setText("Save");
-
-        btnClearLinks.setText("Clear");
-
-        javax.swing.GroupLayout PnlEditLinksLayout = new javax.swing.GroupLayout(PnlEditLinks);
-        PnlEditLinks.setLayout(PnlEditLinksLayout);
-        PnlEditLinksLayout.setHorizontalGroup(
-            PnlEditLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlEditLinksLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(PnlEditLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblLinks)
-                    .addComponent(lblLinkTitle)
-                    .addComponent(txtLinkTitle)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(PnlEditLinksLayout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(btnSaveLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
-                .addComponent(btnClearLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(160, 160, 160))
-        );
-        PnlEditLinksLayout.setVerticalGroup(
-            PnlEditLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlEditLinksLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(lblLinkTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtLinkTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(lblLinks)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addGroup(PnlEditLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSaveLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClearLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
-        );
-
-        TbpEditData.addTab("Edit Links", PnlEditLinks);
-
-        PnlEditMedia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Edit Media", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24))); // NOI18N
-
-        lblAddMedia.setFont(new java.awt.Font("Liberation Sans", 3, 24)); // NOI18N
-        lblAddMedia.setText("Select Media");
-
-        btnChooseFile.setText("Choose File");
-        btnChooseFile.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdateLinks.setText("Update");
+        btnUpdateLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChooseFileActionPerformed(evt);
+                btnUpdateLinksActionPerformed(evt);
             }
         });
 
-        btnMediaName.setFont(new java.awt.Font("Liberation Sans", 3, 24)); // NOI18N
-        btnMediaName.setText("Media Name");
+        btnClearLinks.setText("Clear");
+        btnClearLinks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearLinksActionPerformed(evt);
+            }
+        });
 
-        btnSaveMedia.setText("Save");
+        lblTopicNameLink.setFont(new java.awt.Font("Liberation Sans", 3, 24)); // NOI18N
+        lblTopicNameLink.setText("Topic");
 
-        btnClearMedia.setText("Clear");
+        btnSearchLinks.setText("Search");
+        btnSearchLinks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchLinksActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout PnlEditMediaLayout = new javax.swing.GroupLayout(PnlEditMedia);
-        PnlEditMedia.setLayout(PnlEditMediaLayout);
-        PnlEditMediaLayout.setHorizontalGroup(
-            PnlEditMediaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlEditMediaLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addGroup(PnlEditMediaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PnlEditMediaLayout.createSequentialGroup()
-                        .addComponent(btnSaveMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(210, 210, 210)
-                        .addComponent(btnClearMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PnlEditMediaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtMediaName, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
-                        .addComponent(btnMediaName)
-                        .addComponent(btnChooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtFilePath)
-                        .addComponent(lblAddMedia)))
-                .addContainerGap(323, Short.MAX_VALUE))
+        javax.swing.GroupLayout PnlAddLinksLayout = new javax.swing.GroupLayout(PnlAddLinks);
+        PnlAddLinks.setLayout(PnlAddLinksLayout);
+        PnlAddLinksLayout.setHorizontalGroup(
+            PnlAddLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PnlAddLinksLayout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addComponent(btnUpdateLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
+                .addComponent(btnClearLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(153, 153, 153))
+            .addGroup(PnlAddLinksLayout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(PnlAddLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTopicNameLink)
+                    .addGroup(PnlAddLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblLinks)
+                        .addComponent(lblLinkTitle)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
+                        .addComponent(cmbLinkTitle, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlAddLinksLayout.createSequentialGroup()
+                            .addComponent(cmbTopicNameLink, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSearchLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        PnlEditMediaLayout.setVerticalGroup(
-            PnlEditMediaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlEditMediaLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(lblAddMedia)
-                .addGap(28, 28, 28)
-                .addComponent(txtFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(btnChooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(btnMediaName)
+        PnlAddLinksLayout.setVerticalGroup(
+            PnlAddLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PnlAddLinksLayout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(lblTopicNameLink)
                 .addGap(18, 18, 18)
-                .addComponent(txtMediaName, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addGroup(PnlEditMediaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSaveMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClearMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGroup(PnlAddLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbTopicNameLink, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lblLinkTitle)
+                .addGap(18, 18, 18)
+                .addComponent(cmbLinkTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addComponent(lblLinks)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(PnlAddLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdateLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClearLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26))
         );
 
-        TbpEditData.addTab("Edit Media", PnlEditMedia);
+        TbpAddData.addTab("Add Links", PnlAddLinks);
 
         javax.swing.GroupLayout PnlAddDataLayout = new javax.swing.GroupLayout(PnlAddData);
         PnlAddData.setLayout(PnlAddDataLayout);
@@ -261,15 +298,15 @@ public class EditData extends javax.swing.JFrame {
             PnlAddDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlAddDataLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(TbpEditData, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TbpAddData, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PnlAddDataLayout.setVerticalGroup(
             PnlAddDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlAddDataLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(TbpEditData, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addComponent(TbpAddData, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -287,23 +324,112 @@ public class EditData extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void btnClearLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearLinksActionPerformed
+        clearLinks();
+    }//GEN-LAST:event_btnClearLinksActionPerformed
 
-    }//GEN-LAST:event_btnSaveActionPerformed
+    private void btnUpdateLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateLinksActionPerformed
+        if(cmbTopicNameLink.getSelectedItem().equals("Select")){
+            JOptionPane.showMessageDialog(this, "Please Select Topic.");
+            return;
+        }else if(cmbLinkTitle.getSelectedItem().equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select Topic.");
+            return;
+        }else if(txtLinks.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter Links.");
+            return;
+        }else {
+            ArrayList data = new ArrayList();
+            ArrayList dt;
+            try {
+                dt = new CreateTopicController().getTopicData(cmbTopicName.getSelectedItem().toString());
+                data.add(dt.get(0));
+                data.add(cmbLinkTitle.getSelectedItem());
+                data.add(txtLinks.getText());
+
+                System.out.println(data);
+
+                int chk = new DataOperationsController().addDataLinks(data);
+                if(chk == 1){
+                    JOptionPane.showMessageDialog(this, "Data Inserted Successfully.");
+                    clearLinks();
+                }
+                else
+                JOptionPane.showMessageDialog(this, "ERROR: Data not inserted");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnUpdateLinksActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        // TODO add your handling code here:
+        clearScreen();
     }//GEN-LAST:event_btnClearActionPerformed
 
-    private void btnChooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseFileActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File f = chooser.getSelectedFile();
-        String path = f.getAbsolutePath();
-        String filename = f.getName();
-        txtFilePath.setText(path);
-        txtMediaName.setText(filename);
-    }//GEN-LAST:event_btnChooseFileActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if(cmbTextTitle.getSelectedItem().equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please Select Title.");
+            return;
+        } else if(txtAddText.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Text Data.");
+            return;
+        } else {
+           
+            try {
+                int chk = new DataOperationsController().UpdateData(cmbTextTitle.getSelectedItem().toString(), "TextData", txtAddText.getText());
+                if(chk == 1){
+                    JOptionPane.showMessageDialog(this, "Data Updated Successfully.");
+                    clearScreen();
+                }
+                else
+                JOptionPane.showMessageDialog(this, "ERROR: Data not Updated");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnSearchTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchTextActionPerformed
+        ArrayList dt;
+        try {
+            dt = new CreateTopicController().getTopicData(cmbTopicName.getSelectedItem().toString());
+       
+            data = new DataOperationsController().getTopicData("TextData", Integer.parseInt(dt.get(0).toString()));
+            cmbTextTitle.addItem("Select");
+            for (Object dtt : data) {
+                cmbTextTitle.addItem(dtt.toString());
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnSearchTextActionPerformed
+
+    private void btnSearchLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchLinksActionPerformed
+        ArrayList dt;
+        try {
+            dt = new CreateTopicController().getTopicData(cmbTopicNameLink.getSelectedItem().toString());
+            data = new DataOperationsController().getTopicData("TextLinks", Integer.parseInt(dt.get(0).toString()));     
+            cmbLinkTitle.addItem("Select");
+            for (Object dtt : data) {
+                cmbLinkTitle.addItem(dtt.toString());
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnSearchLinksActionPerformed
+
+    private void btnSearchTextDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchTextDataActionPerformed
+        ArrayList dt;
+        try{
+            dt = new DataOperationsController().getData(cmbTextTitle.getSelectedItem().toString(), "TextData");
+            System.out.println(dt);
+            txtAddText.setText(dt.get(3).toString());
+        }catch(Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnSearchTextDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -342,30 +468,28 @@ public class EditData extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PnlAddData;
-    private javax.swing.JPanel PnlEditLinks;
-    private javax.swing.JPanel PnlEditMedia;
-    private javax.swing.JPanel PnlEditText;
-    private javax.swing.JTabbedPane TbpEditData;
-    private javax.swing.JButton btnChooseFile;
+    private javax.swing.JPanel PnlAddLinks;
+    private javax.swing.JPanel PnlAddText;
+    private javax.swing.JTabbedPane TbpAddData;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnClearLinks;
-    private javax.swing.JButton btnClearMedia;
-    private javax.swing.JButton btnGetText;
-    private javax.swing.JLabel btnMediaName;
-    private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSaveLinks;
-    private javax.swing.JButton btnSaveMedia;
-    private javax.swing.JComboBox<String> cmbSelectTopic;
+    private javax.swing.JButton btnSearchLinks;
+    private javax.swing.JButton btnSearchText;
+    private javax.swing.JButton btnSearchTextData;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnUpdateLinks;
+    private javax.swing.JComboBox<String> cmbLinkTitle;
+    private javax.swing.JComboBox<String> cmbTextTitle;
+    private javax.swing.JComboBox<String> cmbTopicName;
+    private javax.swing.JComboBox<String> cmbTopicNameLink;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblAddMedia;
     private javax.swing.JLabel lblLinkTitle;
     private javax.swing.JLabel lblLinks;
-    private javax.swing.JLabel lblSearchTopic;
+    private javax.swing.JLabel lblTextTitle;
+    private javax.swing.JLabel lblTopicNameLink;
+    private javax.swing.JLabel lblTopicNameText;
     private javax.swing.JTextArea txtAddText;
-    private javax.swing.JTextField txtFilePath;
-    private javax.swing.JTextField txtLinkTitle;
     private javax.swing.JTextArea txtLinks;
-    private javax.swing.JTextField txtMediaName;
     // End of variables declaration//GEN-END:variables
 }
