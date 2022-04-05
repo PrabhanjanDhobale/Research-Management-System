@@ -32,6 +32,36 @@ public class CreateTopicController {
         return 0;
     }
     
+    public ArrayList getAllData() throws SQLException {
+        Connection conn = null;
+        ArrayList<ArrayList> data = new ArrayList<ArrayList>();
+//        ArrayList dt = new ArrayList();
+        try{
+            conn = new ConnectionDB().Connect();
+            PreparedStatement stmt=conn.prepareStatement("select * from topic");
+            ResultSet rs = stmt.executeQuery();
+           
+            while(rs.next()) {
+                ArrayList dt = new ArrayList();
+                dt.add(rs.getInt(1));
+                dt.add(rs.getString(2));
+                dt.add(rs.getString(3));
+                dt.add(rs.getString(4));
+                dt.add(rs.getString(5));
+                data.add(dt);
+            }
+            
+            System.out.println(data);
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
+            
+        }finally {
+          conn.close();  
+        }
+        
+        return data;
+    }
+    
     public ArrayList<String> getTopic() throws SQLException {
         Connection conn = null;
         ArrayList<String> names = new ArrayList<String>();

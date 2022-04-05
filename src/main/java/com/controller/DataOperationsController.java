@@ -36,11 +36,12 @@ public class DataOperationsController {
     }
     
     public int addDataLinks(ArrayList data) throws SQLException {
+        System.out.println("Links");
         System.out.println(data);
         Connection conn = null;
         try{
             conn = new ConnectionDB().Connect();
-            PreparedStatement stmt=conn.prepareStatement("insert into TextLinks (Id, title, data) values(?,?,?)");
+            PreparedStatement stmt=conn.prepareStatement("insert into TextLinks (Id, linkTitle, links) values(?,?,?)");
             stmt.setInt(1,Integer.parseInt(data.get(0).toString()));
             stmt.setString(2,data.get(1).toString());
             stmt.setString(3,data.get(2).toString());
@@ -163,5 +164,35 @@ public class DataOperationsController {
         }finally {
           conn.close();  
         }
+    }
+    
+     public ArrayList getAllData(String tableName, int topicId) throws SQLException {
+        Connection conn = null;
+        ArrayList<ArrayList> data = new ArrayList<ArrayList>();
+//        ArrayList dt = new ArrayList();
+        try{
+            conn = new ConnectionDB().Connect();
+            PreparedStatement stmt=conn.prepareStatement("select * from "+tableName +" where Id="+topicId);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()) {
+                ArrayList dt = new ArrayList();
+                dt.add(rs.getInt(1));
+                dt.add(rs.getInt(2));
+                dt.add(rs.getString(3));
+                dt.add(rs.getString(4));
+                    
+                data.add(dt);
+            }
+            
+            System.out.println(data);
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
+            
+        }finally {
+          conn.close();  
+        }
+        
+        return data;
     }
 }

@@ -4,6 +4,13 @@
  */
 package com.view;
 
+import com.controller.CreateTopicController;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author prabhanjan
@@ -13,8 +20,33 @@ public class ShowTopicData extends javax.swing.JFrame {
     /**
      * Creates new form ShowData
      */
-    public ShowTopicData() {
+    ArrayList data;
+    DefaultTableModel model;
+    public ShowTopicData() throws SQLException {
         initComponents();
+        data = new CreateTopicController().getAllData();
+        model = (DefaultTableModel) tblTopicData.getModel();
+        
+        addDataInTable();
+    }
+    
+    void addDataInTable() {
+        for(var a : data) {
+            System.out.println(a);
+            ArrayList dt = (ArrayList)a;
+            
+            
+            model.insertRow(tblTopicData.getRowCount(), new Object[] {
+               dt.get(0),
+               dt.get(1),
+               dt.get(2),
+               dt.get(3),
+               dt.get(4)
+            });
+                    
+            
+        }
+        
     }
 
     /**
@@ -38,10 +70,7 @@ public class ShowTopicData extends javax.swing.JFrame {
 
         tblTopicData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Topic Name", "Topic Description", "Guide Name", "Asseccibility"
@@ -86,6 +115,7 @@ public class ShowTopicData extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -119,7 +149,11 @@ public class ShowTopicData extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ShowTopicData().setVisible(true);
+                try {
+                    new ShowTopicData().setVisible(true);
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
         });
     }

@@ -442,12 +442,14 @@ public class AddData extends javax.swing.JFrame {
             ArrayList data = new ArrayList();
             ArrayList dt;
             try {
-                dt = new CreateTopicController().getTopicData(cmbTopicName.getSelectedItem().toString());
+                dt = new CreateTopicController().getTopicData(cmbTopicNameLink.getSelectedItem().toString());
                 data.add(dt.get(0));
+                
                 data.add(txtLinkTitle.getText());
                 data.add(txtLinks.getText());
                 
                 System.out.println(data);
+                
                 
                 int chk = new DataOperationsController().addDataLinks(data);
                 if(chk == 1){
