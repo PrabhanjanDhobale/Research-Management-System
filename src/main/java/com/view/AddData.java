@@ -98,6 +98,7 @@ public class AddData extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add Data");
         setBackground(new java.awt.Color(52, 73, 94));
+        setResizable(false);
 
         PnlAddData.setBackground(new java.awt.Color(52, 73, 94));
         PnlAddData.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Data", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N

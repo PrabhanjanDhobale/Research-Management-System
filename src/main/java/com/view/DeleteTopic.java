@@ -62,6 +62,7 @@ public class DeleteTopic extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Delete Topic");
+        setResizable(false);
 
         PnlDeleteTopic.setBackground(new java.awt.Color(52, 73, 94));
         PnlDeleteTopic.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Delete Topic", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N

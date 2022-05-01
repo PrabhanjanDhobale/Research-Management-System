@@ -50,6 +50,7 @@ public class RegistrationForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registration Form");
+        setResizable(false);
 
         RegistratinFormPanel.setBackground(new java.awt.Color(52, 73, 94));
         RegistratinFormPanel.setForeground(new java.awt.Color(62, 62, 62));

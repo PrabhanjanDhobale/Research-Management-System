@@ -47,6 +47,7 @@ public class CreateTopic extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Topic");
         setBackground(new java.awt.Color(52, 73, 94));
+        setResizable(false);
 
         PnlCreateTopic.setBackground(new java.awt.Color(52, 73, 94));
         PnlCreateTopic.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Topic", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 1, 24), new java.awt.Color(255, 255, 204))); // NOI18N

@@ -5,7 +5,12 @@
 package com.view;
 
 
-
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +22,8 @@ public class ContactUs extends javax.swing.JFrame {
     /**
      * Creates new form ContactUs
      */
+    
+    
     public ContactUs() {
         initComponents();
     }
@@ -44,9 +51,12 @@ public class ContactUs extends javax.swing.JFrame {
         btnSend = new javax.swing.JButton();
         lblMailId = new javax.swing.JLabel();
         txtMailId = new javax.swing.JTextField();
+        lblMailIdPassword = new javax.swing.JLabel();
+        txtMailPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Contact Us");
+        setResizable(false);
 
         PnlContactUs.setBackground(new java.awt.Color(52, 73, 94));
         PnlContactUs.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contact Us", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -75,26 +85,36 @@ public class ContactUs extends javax.swing.JFrame {
         lblMailId.setForeground(new java.awt.Color(255, 255, 255));
         lblMailId.setText("Mail Id");
 
+        lblMailIdPassword.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblMailIdPassword.setForeground(new java.awt.Color(255, 255, 255));
+        lblMailIdPassword.setText("Mail Password");
+
         javax.swing.GroupLayout PnlContactUsLayout = new javax.swing.GroupLayout(PnlContactUs);
         PnlContactUs.setLayout(PnlContactUsLayout);
         PnlContactUsLayout.setHorizontalGroup(
             PnlContactUsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlContactUsLayout.createSequentialGroup()
-                .addGroup(PnlContactUsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PnlContactUsLayout.createSequentialGroup()
+                .addGroup(PnlContactUsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PnlContactUsLayout.createSequentialGroup()
                         .addGap(245, 245, 245)
-                        .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PnlContactUsLayout.createSequentialGroup()
+                        .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PnlContactUsLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(PnlContactUsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMailId, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(PnlContactUsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblMessageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txttopicName)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE))
-                            .addComponent(txtMailId, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE))))
-                .addContainerGap(40, Short.MAX_VALUE))
+                            .addComponent(txtMailPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtMailId, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+                            .addGroup(PnlContactUsLayout.createSequentialGroup()
+                                .addGroup(PnlContactUsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblMailId, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(PnlContactUsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblMessageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txttopicName)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE))
+                                    .addComponent(lblMailIdPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(40, 40, 40))
         );
         PnlContactUsLayout.setVerticalGroup(
             PnlContactUsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,7 +123,11 @@ public class ContactUs extends javax.swing.JFrame {
                 .addComponent(lblMailId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtMailId, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addComponent(lblMailIdPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtMailPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(lblMessageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txttopicName, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,7 +148,9 @@ public class ContactUs extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PnlContactUs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PnlContactUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -144,7 +170,58 @@ public class ContactUs extends javax.swing.JFrame {
             return;
         } else {
             try {
+              // change accordingly
+        final String username = txtMailId.getText();  
+         
+        // change accordingly
+        final String password = txtMailPassword.getText();
+         
+                System.out.println(username + " " + password);
+        // or IP address
+        final String host = "localhost";
+ 
+        // Get system properties
+        Properties props = new Properties();            
+         
+        // enable authentication
+        props.put("mail.smtp.auth", "true");              
+         
+        // enable STARTTLS
+        props.put("mail.smtp.starttls.enable", "true");   
+         
+        // Setup mail server
+        props.put("mail.smtp.host", "smtp.gmail.com");    
+         
+        // TLS Port
+        props.put("mail.smtp.port", "587");               
+ 
+        // creating Session instance referenced to
+        // Authenticator object to pass in
+        // Session.getInstance argument
+        Session session = Session.getInstance(props,
+          new javax.mail.Authenticator() {
+            
+            //override the getPasswordAuthentication method
+            protected PasswordAuthentication
+                           getPasswordAuthentication() {
+                                        
+                return new PasswordAuthentication(username,
+                                                 password);
+            }
+          });
+  
+     MimeMessage message = new MimeMessage(session);  
+         message.setFrom(new InternetAddress("prabhanjandhobale31@gmail.com"));  
+         message.addRecipient(Message.RecipientType.TO,new InternetAddress(username));  
+         message.setSubject(txttopicName.getText());  
+         message.setText(txtMsg.getText());  
+  
+         // Send message  
+         Transport.send(message);  
+                
+                JOptionPane.showMessageDialog(this, "Mail Send Successfully");
             }catch(Exception ex) {
+                System.out.println(ex);
                 showMessage("Mail not send.");
                 return;
             }
@@ -191,9 +268,11 @@ public class ContactUs extends javax.swing.JFrame {
     private javax.swing.JButton btnSend;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMailId;
+    private javax.swing.JLabel lblMailIdPassword;
     private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel lblMessageTitle;
     private javax.swing.JTextField txtMailId;
+    private javax.swing.JPasswordField txtMailPassword;
     private javax.swing.JTextArea txtMsg;
     private javax.swing.JTextField txttopicName;
     // End of variables declaration//GEN-END:variables

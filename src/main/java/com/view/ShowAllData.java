@@ -100,6 +100,7 @@ public class ShowAllData extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("All Research Data");
+        setResizable(false);
 
         PnlShowAllData.setBackground(new java.awt.Color(52, 73, 94));
         PnlShowAllData.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "All Research Data", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -137,6 +138,11 @@ public class ShowAllData extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblTextData);
 
         btnShowData.setText("Show Data");
+        btnShowData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowDataActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PnlAddTextLayout = new javax.swing.GroupLayout(PnlAddText);
         PnlAddText.setLayout(PnlAddTextLayout);
@@ -212,6 +218,11 @@ public class ShowAllData extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tblTextLinks);
 
         btnShowLinks.setText("Show Links");
+        btnShowLinks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowLinksActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PnlAddLinksLayout = new javax.swing.GroupLayout(PnlAddLinks);
         PnlAddLinks.setLayout(PnlAddLinksLayout);
@@ -287,6 +298,11 @@ public class ShowAllData extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tblMediaData);
 
         btnShowImage.setText("Show Image");
+        btnShowImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowImageActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -440,6 +456,42 @@ public class ShowAllData extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_btnSearchMediaActionPerformed
+
+    private void btnShowDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowDataActionPerformed
+        ArrayList data = new ArrayList();
+        int row = tblTextData.getSelectedRow();
+        data.add("TextData");
+        for(int i=0; i<4; i++) {
+            data.add(tblTextData.getModel().getValueAt(row, i).toString());
+        }
+        
+        System.out.println(data);
+        new EditData(data).setVisible(true);
+    }//GEN-LAST:event_btnShowDataActionPerformed
+
+    private void btnShowLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowLinksActionPerformed
+        ArrayList data = new ArrayList();
+        int row = tblTextLinks.getSelectedRow();
+        data.add("LinkData");
+        for(int i=0; i<4; i++) {
+            data.add(tblTextLinks.getModel().getValueAt(row, i).toString());
+        }
+        
+        System.out.println(data);
+        new EditData(data).setVisible(true);
+    }//GEN-LAST:event_btnShowLinksActionPerformed
+
+    private void btnShowImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowImageActionPerformed
+        ArrayList data = new ArrayList();
+        int row = tblMediaData.getSelectedRow();
+        data.add("Media Data");
+        for(int i=0; i<4; i++) {
+            data.add(tblMediaData.getModel().getValueAt(row, i).toString());
+        }
+        
+        System.out.println(data);
+        new ViewImage(data.get(4).toString()).setVisible(true);
+    }//GEN-LAST:event_btnShowImageActionPerformed
 
     /**
      * @param args the command line arguments

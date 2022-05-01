@@ -41,36 +41,36 @@ public class RecoverPassword extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PnlRecoverPassword = new javax.swing.JPanel();
         lblRecoverPasswordTitle = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JPasswordField();
         lblRePassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
         txtRePassword = new javax.swing.JPasswordField();
-        btnSubmit = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        btnSubmit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Recover Password");
+        setResizable(false);
+
+        PnlRecoverPassword.setBackground(new java.awt.Color(52, 73, 94));
 
         lblRecoverPasswordTitle.setFont(new java.awt.Font("Yrsa SemiBold", 1, 36)); // NOI18N
+        lblRecoverPasswordTitle.setForeground(new java.awt.Color(255, 255, 255));
         lblRecoverPasswordTitle.setText("Recover Password");
 
         lblPassword.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Password");
+
+        lblRePassword.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        lblRePassword.setForeground(new java.awt.Color(255, 255, 255));
+        lblRePassword.setText("Re-enter Password");
 
         txtPassword.setText("Password");
 
-        lblRePassword.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        lblRePassword.setText("Re-enter Password");
-
         txtRePassword.setText("Password");
-
-        btnSubmit.setText("Submit");
-        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitActionPerformed(evt);
-            }
-        });
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -79,51 +79,69 @@ public class RecoverPassword extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        btnSubmit.setText("Submit");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PnlRecoverPasswordLayout = new javax.swing.GroupLayout(PnlRecoverPassword);
+        PnlRecoverPassword.setLayout(PnlRecoverPasswordLayout);
+        PnlRecoverPasswordLayout.setHorizontalGroup(
+            PnlRecoverPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PnlRecoverPasswordLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(PnlRecoverPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PnlRecoverPasswordLayout.createSequentialGroup()
                         .addComponent(lblRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addComponent(txtRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(PnlRecoverPasswordLayout.createSequentialGroup()
                         .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(PnlRecoverPasswordLayout.createSequentialGroup()
                 .addGap(168, 168, 168)
                 .addComponent(lblRecoverPasswordTitle)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(PnlRecoverPasswordLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(97, 97, 97))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        PnlRecoverPasswordLayout.setVerticalGroup(
+            PnlRecoverPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PnlRecoverPasswordLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(lblRecoverPasswordTitle)
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlRecoverPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPassword)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlRecoverPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRePassword))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlRecoverPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PnlRecoverPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PnlRecoverPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -141,20 +159,20 @@ public class RecoverPassword extends javax.swing.JFrame {
             return;
         } else {
             if(txtPassword.getText().equals(txtRePassword.getText())) {
-            ForgotPasswordController fvP = new ForgotPasswordController();
-            try {
-                if(fvP.changePassword(txtPassword.getText(), this.expirement) == 1){
-                    JOptionPane.showMessageDialog(this, "Password Updated Successfully! Please Login");
-                    this.dispose();
-                    new LoginForm().setVisible(true);
+                ForgotPasswordController fvP = new ForgotPasswordController();
+                try {
+                    if(fvP.changePassword(txtPassword.getText(), this.expirement) == 1){
+                        JOptionPane.showMessageDialog(this, "Password Updated Successfully! Please Login");
+                        this.dispose();
+                        new LoginForm().setVisible(true);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(RecoverPassword.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(RecoverPassword.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                JOptionPane.showMessageDialog(this, "Password not matched.");
+                return;
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Password not matched.");
-            return;
-        }
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
@@ -194,6 +212,7 @@ public class RecoverPassword extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PnlRecoverPassword;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JLabel lblPassword;

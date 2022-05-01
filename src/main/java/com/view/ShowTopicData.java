@@ -64,6 +64,7 @@ public class ShowTopicData extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Show Topics");
+        setResizable(false);
 
         PnlShowTopicData.setBackground(new java.awt.Color(52, 73, 94));
         PnlShowTopicData.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Show Topics", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N

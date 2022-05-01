@@ -4,9 +4,17 @@
  */
 package com.view;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +27,20 @@ public class MainPage extends javax.swing.JFrame {
      */
     public MainPage() {
         initComponents();
+        
+        String imgPath = "assets/projectImages/research.jpg";
+
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(imgPath));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        Image dimg = img.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(),Image.SCALE_SMOOTH);
+        
+        ImageIcon imgThisImg = new ImageIcon(dimg);
+        lblImage.setIcon(imgThisImg);
     }
 
     /**
@@ -31,6 +53,7 @@ public class MainPage extends javax.swing.JFrame {
     private void initComponents() {
 
         PnlHome = new javax.swing.JPanel();
+        lblImage = new javax.swing.JLabel();
         MenuMain = new javax.swing.JMenuBar();
         MnCreateTopic = new javax.swing.JMenu();
         MnICreateTopic = new javax.swing.JMenuItem();
@@ -40,15 +63,14 @@ public class MainPage extends javax.swing.JFrame {
         MnAddData = new javax.swing.JMenu();
         MnIAddData = new javax.swing.JMenuItem();
         MnlUpdateData = new javax.swing.JMenuItem();
-        MnlDeleteData = new javax.swing.JMenuItem();
         MnlShowData = new javax.swing.JMenuItem();
         MnSetting = new javax.swing.JMenu();
         MnIEditAccount = new javax.swing.JMenuItem();
         MnIContact = new javax.swing.JMenuItem();
-        MnlHelp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Research Management System");
+        setResizable(false);
 
         PnlHome.setBackground(new java.awt.Color(52, 73, 94));
 
@@ -56,11 +78,11 @@ public class MainPage extends javax.swing.JFrame {
         PnlHome.setLayout(PnlHomeLayout);
         PnlHomeLayout.setHorizontalGroup(
             PnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1129, Short.MAX_VALUE)
+            .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 1131, Short.MAX_VALUE)
         );
         PnlHomeLayout.setVerticalGroup(
             PnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 698, Short.MAX_VALUE)
+            .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
         );
 
         MnCreateTopic.setText("Topic");
@@ -90,6 +112,11 @@ public class MainPage extends javax.swing.JFrame {
         MnCreateTopic.add(MnIDeleteTopic);
 
         MnlShowTopic.setText("Show Topics");
+        MnlShowTopic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnlShowTopicActionPerformed(evt);
+            }
+        });
         MnCreateTopic.add(MnlShowTopic);
 
         MenuMain.add(MnCreateTopic);
@@ -112,10 +139,12 @@ public class MainPage extends javax.swing.JFrame {
         });
         MnAddData.add(MnlUpdateData);
 
-        MnlDeleteData.setText("Delete Data");
-        MnAddData.add(MnlDeleteData);
-
         MnlShowData.setText("Show Data");
+        MnlShowData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnlShowDataActionPerformed(evt);
+            }
+        });
         MnAddData.add(MnlShowData);
 
         MenuMain.add(MnAddData);
@@ -137,9 +166,6 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         MnSetting.add(MnIContact);
-
-        MnlHelp.setText("Help");
-        MnSetting.add(MnlHelp);
 
         MenuMain.add(MnSetting);
 
@@ -193,6 +219,18 @@ public class MainPage extends javax.swing.JFrame {
          new ContactUs().setVisible(true);
     }//GEN-LAST:event_MnIContactActionPerformed
 
+    private void MnlShowTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnlShowTopicActionPerformed
+        try {
+            new ShowTopicData().setVisible(true);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_MnlShowTopicActionPerformed
+
+    private void MnlShowDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnlShowDataActionPerformed
+        new ShowAllData().setVisible(true);
+    }//GEN-LAST:event_MnlShowDataActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -239,11 +277,10 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem MnIEditAccount;
     private javax.swing.JMenuItem MnIEditTopic;
     private javax.swing.JMenu MnSetting;
-    private javax.swing.JMenuItem MnlDeleteData;
-    private javax.swing.JMenuItem MnlHelp;
     private javax.swing.JMenuItem MnlShowData;
     private javax.swing.JMenuItem MnlShowTopic;
     private javax.swing.JMenuItem MnlUpdateData;
     private javax.swing.JPanel PnlHome;
+    private javax.swing.JLabel lblImage;
     // End of variables declaration//GEN-END:variables
 }

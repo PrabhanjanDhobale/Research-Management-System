@@ -74,6 +74,7 @@ public class EditTopic extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Topic");
+        setResizable(false);
 
         PnlEditTopic.setBackground(new java.awt.Color(52, 73, 94));
         PnlEditTopic.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Edit Topic", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -149,10 +150,9 @@ public class EditTopic extends javax.swing.JFrame {
                 .addGroup(PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtTopicName)
                     .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlEditTopicLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtGuideName)
-                        .addComponent(cmbAccessibility, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1))
+                    .addComponent(txtGuideName)
+                    .addComponent(cmbAccessibility, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(cmbTopicName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(90, 90, 90))
         );

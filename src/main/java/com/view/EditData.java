@@ -8,15 +8,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import com.controller.DataOperationsController;
 import com.controller.CreateTopicController;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
+
 
 /**
  *
@@ -34,6 +27,20 @@ public class EditData extends javax.swing.JFrame {
         initComponents();
         addinCmbTopic();
         
+    }
+    
+    public EditData(ArrayList data) {
+        this();
+        if(data.get(0).equals("TextData")) {
+            cmbTopicName.setSelectedItem(data.get(2));
+            cmbTextTitle.addItem(data.get(3).toString());
+            txtAddText.setText(data.get(4).toString());
+        }else if(data.get(0).equals("LinkData")) {
+            TbpAddData.setSelectedIndex(1);
+            cmbTopicNameLink.setSelectedItem(data.get(2));
+            cmbLinkTitle.addItem(data.get(3).toString());
+            txtLinks.setText(data.get(4).toString());
+        }
     }
     
     public void addinCmbTopic() {
@@ -104,6 +111,7 @@ public class EditData extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Data");
+        setResizable(false);
 
         PnlAddData.setBackground(new java.awt.Color(52, 73, 94));
         PnlAddData.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Data", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 3, 24), new java.awt.Color(255, 255, 255))); // NOI18N
